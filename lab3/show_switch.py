@@ -2,7 +2,7 @@ from netmiko import ConnectHandler
 
 switch = {
     "device_type": "cisco_ios",
-    "ip": "172.16.6.132",        # Switch management IP
+    "ip": "172.16.6.132",        
     "username": "student",
     "password": "lab123",
     "secret": "lab123",

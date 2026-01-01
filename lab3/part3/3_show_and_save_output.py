@@ -11,12 +11,10 @@ device = {
 net_conn = ConnectHandler(**device)
 net_conn.enable()
 
-# The show command you want to capture
 command = "show ip interface brief"
 
 output = net_conn.send_command(command)
 
-# Save to a text file
 output_file = "3_show_ip_int_brief_output.txt"
 
 with open(output_file, "w") as f:

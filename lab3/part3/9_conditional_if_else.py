@@ -11,15 +11,12 @@ device = {
 net_conn = ConnectHandler(**device)
 net_conn.enable()
 
-# Desired hostname
 desired_hostname = "MY_ROUTER"
 
-# Get current hostname
 output = net_conn.send_command("show running-config | include hostname")
 
 print("Current hostname:", output)
 
-# ---- CONDITIONAL LOGIC ----
 if desired_hostname in output:
     print("\nHostname is already correct. No changes needed.")
 else:
@@ -30,5 +27,4 @@ else:
     net_conn.save_config()
     print("Hostname updated and configuration saved.")
 
-# Disconnect
 net_conn.disconnect()

@@ -1,27 +1,24 @@
 from netmiko import ConnectHandler
 
-# List of multiple devices
 devices = [
     {
         "device_type": "cisco_xe",
-        "ip": "192.168.56.101",     # your real CSR1000v
+        "ip": "192.168.56.101",    
         "username": "cisco",
         "password": "cisco123!",
         "secret": "cisco123!",
     },
     {
         "device_type": "cisco_xe",
-        "ip": "192.168.56.102",     # example (fake) router
+        "ip": "192.168.56.102",   
         "username": "admin",
         "password": "password",
         "secret": "password",
     }
 ]
 
-# Command to run on each device
 command = "show ip interface brief"
 
-# Loop through devices
 for dev in devices:
     print(f"\n----- Connecting to {dev['ip']} -----")
 

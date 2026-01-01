@@ -1,7 +1,0 @@
-interface Loopback20
- ip address 20.20.20.1 255.255.255.255
- description Created_from_external_file
-
-interface Loopback30
- ip address 30.30.30.1 255.255.255.255
- description Configured_via_file

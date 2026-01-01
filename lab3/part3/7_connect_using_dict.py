@@ -1,6 +1,5 @@
 from netmiko import ConnectHandler
 
-# Device connection information stored in a Python dictionary
 device = {
     "device_type": "cisco_xe",
     "ip": "192.168.56.101",
@@ -9,7 +8,6 @@ device = {
     "secret": "cisco123!",
 }
 
-# Connect using the dictionary
 net_conn = ConnectHandler(**device)
 net_conn.enable()
 

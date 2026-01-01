@@ -11,9 +11,6 @@ devices = [
     }
 ]
 
-# =============================
-# BASELINE CONFIG REQUIREMENTS
-# =============================
 
 baseline = {
     "hostname": "NET-AUTO-ROUTER",
@@ -22,10 +19,6 @@ baseline = {
     "loopback0_ip": "1.1.1.1 255.255.255.255",
     "gi1_description": "Uplink_to_Core",
 }
-
-# =============================
-# COMPLIANCE CHECK FUNCTIONS
-# =============================
 
 def connect_device(device):
     conn = ConnectHandler(**device)
@@ -52,10 +45,6 @@ def check_gi1_description(conn):
     desc = conn.send_command("show run interface gi1 | include description")
     return baseline["gi1_description"] in desc
 
-# =============================
-# AUTO-FIX FUNCTIONS
-# =============================
-
 def fix_hostname(conn):
     conn.send_config_set([f"hostname {baseline['hostname']}"])
 
@@ -76,10 +65,6 @@ def fix_gi1_description(conn):
         "interface GigabitEthernet1",
         f"description {baseline['gi1_description']}",
     ])
-
-# =============================
-# MAIN AUTOMATION LOGIC
-# =============================
 
 report = []
 timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -130,10 +115,6 @@ for dev in devices:
 
     conn.save_config()
     conn.disconnect()
-
-# =============================
-# WRITE REPORT TO FILE
-# =============================
 
 report_filename = "network_compliance_report.txt"
 

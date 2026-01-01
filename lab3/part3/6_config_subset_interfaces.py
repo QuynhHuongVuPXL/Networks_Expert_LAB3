@@ -11,7 +11,6 @@ device = {
 net_conn = ConnectHandler(**device)
 net_conn.enable()
 
-# Use real interfaces from your CSR1000v
 interfaces_to_configure = [
     "Loopback70",
     "Loopback71",

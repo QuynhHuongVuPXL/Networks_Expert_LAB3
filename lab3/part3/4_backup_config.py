@@ -12,14 +12,11 @@ device = {
 net_conn = ConnectHandler(**device)
 net_conn.enable()
 
-# Get running configuration
 running_config = net_conn.send_command("show running-config")
 
-# Generate a timestamped filename
 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 backup_filename = f"backup_{device['ip']}_{timestamp}.cfg"
 
-# Save to file
 with open(backup_filename, "w") as backup_file:
     backup_file.write(running_config)
 
