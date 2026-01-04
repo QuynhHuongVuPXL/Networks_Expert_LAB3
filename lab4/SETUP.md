@@ -78,5 +78,13 @@ Zonder deze capability zal een script dat de candidate datastore vereist correct
 ````
 
 # 6. Commando's 
-Datastores checken: show netconf-yang datastores
-Features checken: show netconf-yang features
+Datastores checken:
+
+```cli
+show netconf-yang datastores
+````
+
+Features checken:
+```cli
+show netconf-yang features
+````
