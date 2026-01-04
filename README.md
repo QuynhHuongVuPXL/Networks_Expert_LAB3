@@ -25,6 +25,7 @@ Tijdens de installatie en configuratie van de CSR1000v VM zijn geen problemen of
 
 ### Task Verification
 Installatie was succesvol
+
 ---
 
 ## Part 3: Python Network automation with NETMIKO 
@@ -82,6 +83,7 @@ Er zijn geen functionele problemen opgetreden met het toestel of de RESTCONF-ser
 De werking werd succesvol geverifieerd doordat de GET-requests correcte JSON-responses teruggaven en de PUT-request resulteerde in een HTTP 201 Created status. Daarnaast werd via de CLI op het IOS XE-toestel bevestigd dat de nieuwe loopbackinterface correct was aangemaakt en actief was.
 
 ---
+
 
 
 
