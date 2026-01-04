@@ -33,19 +33,27 @@ def main():
         hostkey_verify=False
     ) as m:
 
-        try:
-            print("3. Loading config into candidate datastore...")
-            m.edit_config(target="candidate", config=config_xml)
+        # Check of candidate supported wordt
+        use_candidate = any(":candidate" in cap for cap in m.server_capabilities)
 
-            print("4. Committing candidate to running...")
-            m.commit()
+        try:
+            if use_candidate:
+                print("3. Candidate datastore supported")
+                m.edit_config(target="candidate", config=config_xml)
+                print("4. Committing candidate to running...")
+                m.commit()
+            else:
+                print("3. Candidate NOT supported, using running datastore")
+                m.edit_config(target="running", config=config_xml)
 
             print("5. Deployment successful!")
 
         except Exception as e:
-            print("Error occurred, discarding changes")
-            m.discard_changes()
+            print("❌ Error occurred")
+            if use_candidate:
+                m.discard_changes()
             print(e)
+
 
 if __name__ == "__main__":
     main()

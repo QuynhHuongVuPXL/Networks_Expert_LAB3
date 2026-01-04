@@ -1,4 +1,6 @@
 <config>
+
+  <!-- Native IOS-XE config -->
   <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
 
     <!-- Hostname -->
@@ -31,17 +33,23 @@
       </GigabitEthernet>
     </interface>
 
-    <!-- OSPF -->
-    <router>
-      <ospf>
-        <id>1</id>
-        <network>
-          <ip>10.0.0.0</ip>
-          <wildcard>0.0.255.255</wildcard>
-          <area>0</area>
-        </network>
-      </ospf>
-    </router>
-
   </native>
+
+  <!-- OSPF via correct YANG -->
+  <ospf xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-ospf">
+    <processes>
+      <process>
+        <process-id>1</process-id>
+        <router-id>1.1.1.1</router-id>
+        <networks>
+          <network>
+            <ip>10.0.0.0</ip>
+            <wildcard>0.0.255.255</wildcard>
+            <area>0</area>
+          </network>
+        </networks>
+      </process>
+    </processes>
+  </ospf>
+
 </config>
