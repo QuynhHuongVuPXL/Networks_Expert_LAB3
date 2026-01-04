@@ -88,3 +88,9 @@ Features checken:
 ```cli
 show netconf-yang features
 ````
+
+# 7. Bewijs
+
+![CLI fail](/images/deploy_if_fail.png)
+
+![CLI fail](/images/deploy_if_success.png)
