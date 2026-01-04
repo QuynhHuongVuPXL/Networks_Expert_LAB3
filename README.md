@@ -1,4 +1,6 @@
-﻿# Networks_Expert_LAB3
+# Quynh Huong Vu 
+
+ # Networks_Expert_LAB3
 
 ---
 
@@ -110,5 +112,6 @@ Daarnaast zorgde een foutieve plaatsing van de OSPF configuratie in het XML-best
 Na de succesvolle uitvoering van het NETCONF-script werd de configuratie gecontroleerd om te bevestigen dat alle onderdelen correct actief waren op het IOS-XE toestel. Hierbij werd nagegaan of de hostname correct was toegepast, of de interfaces met de juiste IP-adressen actief waren en of het OSPF-proces correct draaide.
 
 Daarnaast werd gecontroleerd of de NETCONF candidate datastore effectief werd gebruikt tijdens de deployment en of de configuratie atomair werd toegepast. Omdat de configuratie pas actief werd na een expliciete commit, kon worden bevestigd dat er geen tussentijdse of gedeeltelijke wijzigingen in de running-config zichtbaar waren.
+
 
 Deze verificatiestappen bevestigen dat de automatisering correct functioneert en dat de oplossing voldoet aan alle opgelegde vereisten van de opdracht.
