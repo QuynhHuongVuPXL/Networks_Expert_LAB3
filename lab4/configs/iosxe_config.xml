@@ -1,9 +1,13 @@
-<config>
+<config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
 
   <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+
+    <!-- Hostname -->
     <hostname>CSR1kv-NETCONF</hostname>
 
+    <!-- Interfaces -->
     <interface>
+
       <Loopback>
         <name>10</name>
         <description>NETCONF Loopback10</description>
@@ -29,23 +33,31 @@
           </address>
         </ip>
       </Loopback>
-    </interface>
-  </native>
 
-  <ospf xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-ospf">
-    <processes>
-      <process>
-        <process-id>1</process-id>
+    </interface>
+
+    <!-- OSPF (YANG-native, compatible with IOS-XE) -->
+    <router>
+      <ospf xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-ospf">
+
+        <id>1</id>
         <router-id>1.1.1.1</router-id>
-        <networks>
-          <network>
-            <ip>10.0.0.0</ip>
-            <wildcard>0.0.255.255</wildcard>
-            <area>0</area>
-          </network>
-        </networks>
-      </process>
-    </processes>
-  </ospf>
+
+        <network>
+          <ip>10.10.10.10</ip>
+          <mask>0.0.0.0</mask>
+          <area>0</area>
+        </network>
+
+        <network>
+          <ip>10.11.11.11</ip>
+          <mask>0.0.0.0</mask>
+          <area>0</area>
+        </network>
+
+      </ospf>
+    </router>
+
+  </native>
 
 </config>

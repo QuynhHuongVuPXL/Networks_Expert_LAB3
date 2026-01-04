@@ -1,15 +1,21 @@
+#!/usr/bin/env python3
+
+
+import sys
+import hashlib
+import requests
 from ncclient import manager
 from ncclient.operations.rpc import RPCError
-import requests
-import sys
-import xml.etree.ElementTree as ET
 
+
+# ===== GitHub RAW config (public repo) =====
 GITHUB_RAW_URL = (
     "https://raw.githubusercontent.com/"
     "QuynhHuongVuPXL/Networks_Expert_LAB3/"
     "main/lab4/configs/iosxe_config.xml"
 )
 
+# ===== Device credentials =====
 DEVICE = {
     "host": "192.168.56.101",
     "port": 830,
@@ -17,114 +23,151 @@ DEVICE = {
     "password": "cisco123!",
 }
 
-def get_config_from_github(url: str) -> str:
+# ===== NETCONF capabilities we care about =====
+CANDIDATE_CAP = "urn:ietf:params:netconf:capability:candidate:1.0"
+VALIDATE_CAP_10 = "urn:ietf:params:netconf:capability:validate:1.0"
+VALIDATE_CAP_11 = "urn:ietf:params:netconf:capability:validate:1.1"
+
+
+def fetch_config_from_github(url: str) -> str:
     r = requests.get(url, timeout=20)
     if r.status_code != 200:
         raise RuntimeError(f"GitHub fetch failed: {r.status_code} {r.text[:200]}")
-    return r.text.strip()
 
-def ensure_is_netconf_config(xml_text: str) -> str:
-    # Validate that root is <config> (NETCONF edit-config payload root)
+    xml = r.text.strip()
+
+    # NETCONF edit-config payload should start with <config ...>
+    if not xml.lstrip().startswith("<config"):
+        raise ValueError("Downloaded content is not a NETCONF <config> payload.")
+
+    sha = hashlib.sha256(xml.encode("utf-8")).hexdigest()
+    print(f"[OK] Config fetched from GitHub ({len(xml)} bytes) sha256={sha[:12]}...")
+
+    return xml
+
+
+def has_cap(caps, needle: str) -> bool:
+    return any(needle in c for c in caps)
+
+
+def main() -> int:
+    print("1) Fetching config from GitHub (single source of truth)...")
     try:
-        root = ET.fromstring(xml_text)
-    except ET.ParseError as e:
-        raise RuntimeError(f"XML parse error: {e}")
-
-    if root.tag != "config":
-        raise RuntimeError(f"Root element must be <config>, got <{root.tag}>")
-
-    return xml_text
-
-def supports_candidate(caps) -> bool:
-    return any("capability:candidate" in c for c in caps)
-
-def supports_validate(caps) -> bool:
-    return any("capability:validate" in c for c in caps)
-
-def main():
-    print("1) Fetching config from GitHub...")
-    full_xml = get_config_from_github(GITHUB_RAW_URL)
-    full_xml = ensure_is_netconf_config(full_xml)
+        config_xml = fetch_config_from_github(GITHUB_RAW_URL)
+    except Exception as e:
+        print("[FAIL] Could not fetch/validate GitHub XML:", e)
+        return 1
 
     print("2) Connecting to IOS-XE via NETCONF...")
-    with manager.connect(
-        host=DEVICE["host"],
-        port=DEVICE["port"],
-        username=DEVICE["username"],
-        password=DEVICE["password"],
-        hostkey_verify=False,
-        look_for_keys=False,
-        allow_agent=False,
-        device_params={"name": "csr"}  # helps with IOS-XE/CSR quirks
-    ) as m:
+    try:
+        with manager.connect(
+            host=DEVICE["host"],
+            port=DEVICE["port"],
+            username=DEVICE["username"],
+            password=DEVICE["password"],
+            allow_agent=False,
+            look_for_keys=False,
+            hostkey_verify=False,
+            timeout=30,
+            device_params={"name": "iosxe"},
+        ) as m:
 
-        caps = list(m.server_capabilities)
-        use_candidate = supports_candidate(caps)
-        can_validate = supports_validate(caps)
+            print("[OK] NETCONF connected")
 
-        print("DEBUG candidate supported:", use_candidate)
-        print("DEBUG validate supported:", can_validate)
+            caps = list(m.server_capabilities)
 
-        target = "candidate" if use_candidate else "running"
+            # Hard requirement: candidate datastore
+            if not has_cap(caps, CANDIDATE_CAP):
+                print("[FAIL] Candidate datastore capability is missing on this device.")
+                print(f"       Expected: {CANDIDATE_CAP}")
+                print("       Fix on IOS-XE (if supported by your image):")
+                print("         conf t")
+                print("         netconf-yang")
+                print("         netconf-yang feature candidate-datastore")
+                print("         end")
+                return 1
 
-        # lock for clean atomic transaction
-        locked = False
-        try:
-            if use_candidate:
+            validate_supported = has_cap(caps, VALIDATE_CAP_10) or has_cap(caps, VALIDATE_CAP_11)
+            print("[OK] candidate datastore supported")
+            if validate_supported:
+                print("[OK] validate capability supported (optional)")
+
+            locked = False
+            try:
+                # Atomic staging: lock -> discard -> edit -> (validate) -> commit
                 print("3) Locking candidate...")
                 m.lock("candidate")
                 locked = True
+                print("[OK] candidate locked")
 
-            print(f"4) edit-config to {target} (atomic payload: native + ospf)...")
-            m.edit_config(
-                target=target,
-                config=full_xml,
-                default_operation="merge",
-                error_option="rollback-on-error"
-            )
+                print("4) discard-changes (clean candidate)...")
+                m.discard_changes()
+                print("[OK] candidate cleared")
 
-            if use_candidate and can_validate:
-                print("5) Validating candidate...")
-                m.validate(source="candidate")
+                print("5) edit-config -> candidate (single atomic payload)...")
+                reply = m.edit_config(
+                    target="candidate",
+                    config=config_xml,
+                    default_operation="merge",
+                    error_option="rollback-on-error",
+                )
+                # If you want to see raw rpc-reply:
+                # print(reply.xml)
+                print("[OK] staged config in candidate")
 
-            if use_candidate:
-                print("6) Commit candidate -> running...")
-                m.commit()
+                if validate_supported:
+                    print("6) validate(candidate)...")
+                    m.validate(source="candidate")
+                    print("[OK] validate passed")
 
-            print("SUCCESS: Configuration deployed atomically.")
+                print("7) commit candidate -> running...")
+                c = m.commit()
+                # print(c.xml)
+                print("[OK] commit done")
 
-        except RPCError as e:
-            print("NETCONF RPCError")
-            print("Message:", getattr(e, "message", ""))
-            print("Path:", getattr(e, "path", ""))
-            print("Info:", getattr(e, "info", ""))
-            if use_candidate:
-                print("Discarding candidate changes...")
+                print("\n[SUCCESS] Full configuration deployed atomically and is now active.")
+                return 0
+
+            except RPCError as e:
+                print("\n[FAIL] NETCONF RPCError during deployment")
+                print("Message:", getattr(e, "message", None))
+                print("Path:", getattr(e, "path", None))
+                print("Info:", getattr(e, "info", None))
+
+                print("\nRolling back staged changes (discard-changes)...")
                 try:
                     m.discard_changes()
-                except Exception:
-                    pass
-            sys.exit(1)
+                    print("[OK] discard-changes executed")
+                except Exception as ee:
+                    print("[WARN] discard-changes failed:", ee)
 
-        except Exception as e:
-            print("Unexpected error:", e)
-            if use_candidate:
-                print("Discarding candidate changes...")
+                return 1
+
+            except Exception as e:
+                print("\n[FAIL] Unexpected error during deployment:", e)
+
+                print("\nRolling back staged changes (discard-changes)...")
                 try:
                     m.discard_changes()
-                except Exception:
-                    pass
-            sys.exit(1)
+                    print("[OK] discard-changes executed")
+                except Exception as ee:
+                    print("[WARN] discard-changes failed:", ee)
 
-        finally:
-            if use_candidate and locked:
-                print("Unlocking candidate...")
-                try:
-                    m.unlock("candidate")
-                except Exception:
-                    pass
+                return 1
 
-    print("Done.")
+            finally:
+                if locked:
+                    print("8) Unlocking candidate...")
+                    try:
+                        m.unlock("candidate")
+                        print("[OK] candidate unlocked")
+                    except Exception as e:
+                        print("[WARN] unlock candidate failed:", e)
+
+    except Exception as e:
+        print("[FAIL] NETCONF connection failed:", e)
+        return 1
+
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())
