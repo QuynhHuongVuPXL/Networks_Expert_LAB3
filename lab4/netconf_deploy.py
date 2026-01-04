@@ -3,7 +3,7 @@ import requests
 import sys
 
 # -------- GitHub config --------
-GITHUB_RAW_URL = "https://raw.githubusercontent.com/QuynhHuongVuPXL/Networks_Expert_LAB3/lab4/configs/iosxe_config.xml"
+GITHUB_RAW_URL = "https://raw.githubusercontent.com/QuynhHuongVuPXL/Networks_Expert_LAB3/main/lab4/configs/iosxe_config.xml"
 
 # -------- Device credentials --------
 DEVICE = {
@@ -49,7 +49,7 @@ def main():
             print("5. Deployment successful!")
 
         except Exception as e:
-            print("❌ Error occurred")
+            print("Error occurred")
             if use_candidate:
                 m.discard_changes()
             print(e)
