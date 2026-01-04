@@ -1,41 +1,37 @@
 <config>
 
-  <!-- Native IOS-XE config -->
   <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
-
-    <!-- Hostname -->
     <hostname>CSR1kv-NETCONF</hostname>
 
-    <!-- Interfaces -->
     <interface>
-      <GigabitEthernet>
-        <name>2</name>
+      <Loopback>
+        <name>10</name>
+        <description>NETCONF Loopback10</description>
         <ip>
           <address>
             <primary>
-              <address>10.0.0.1</address>
-              <mask>255.255.255.0</mask>
+              <address>10.10.10.10</address>
+              <mask>255.255.255.255</mask>
             </primary>
           </address>
         </ip>
-      </GigabitEthernet>
+      </Loopback>
 
-      <GigabitEthernet>
-        <name>3</name>
+      <Loopback>
+        <name>11</name>
+        <description>NETCONF Loopback11</description>
         <ip>
           <address>
             <primary>
-              <address>10.0.1.1</address>
-              <mask>255.255.255.0</mask>
+              <address>10.11.11.11</address>
+              <mask>255.255.255.255</mask>
             </primary>
           </address>
         </ip>
-      </GigabitEthernet>
+      </Loopback>
     </interface>
-
   </native>
 
-  <!-- OSPF via correct YANG -->
   <ospf xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-ospf">
     <processes>
       <process>
