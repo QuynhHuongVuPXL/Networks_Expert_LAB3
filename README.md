@@ -48,20 +48,30 @@ De resultaten van de NETMIKO-automatisering bevestigen dat de taken succesvol zi
 ## Part 4: Explore YANG Models 
 
 ### Task Preparation and Implementation
+De DEVASC virtual machine werd succesvol opgestart en de benodigde tools, waaronder pyang, waren beschikbaar. Het YANG-model ietf-interfaces.yang werd gedownload vanaf GitHub en lokaal opgeslagen. Met behulp van pyang werd het YANG-bestand omgezet naar een boomstructuur (tree format), waardoor de opbouw van het model eenvoudig te analyseren was. Door het volgen van de beschreven stappen konden de belangrijkste containers, lists en leaf-nodes overzichtelijk worden bekeken.
 
 ### Task Troubleshooting
+Tijdens deze opdracht zijn geen problemen of foutmeldingen opgetreden. Het verkennen van het YANG-model was voornamelijk een kwestie van de stappen correct volgen. Eventuele meldingen over ontbrekende modules hadden geen invloed op het bekijken van de tree-structuur en konden veilig genegeerd worden.
 
 ### Task Verification
+De opdracht werd succesvol geverifieerd doordat het YANG-model correct werd weergegeven in tree-format. Belangrijke elementen zoals interfaces, interface-namen en status-attributen waren duidelijk zichtbaar. Dit bevestigt dat het YANG-model correct is geladen en dat pyang correct functioneert binnen de labomgeving.
 
 ---
 
 ## Part 5: Use NETCONF to Access an IOS XE Device 
 
 ### Task Preparation and Implementation
+De NETCONF-omgeving was correct opgezet en de verbinding met het IOS XE-apparaat werd succesvol tot stand gebracht met behulp van ncclient. Met NETCONF werden configuratiegegevens opgehaald en aangepast via YANG-gebaseerde XML-structuren. De taken konden volgens de instructies worden uitgevoerd en de configuratiewijzigingen werden correct toegepast op het device.
 
 ### Task Troubleshooting
+Er zijn geen functionele problemen opgetreden tijdens deze opdracht. De enige uitdaging was het werken met de YANG/XML-structuur, die vrij uitgebreid en gedetailleerd is en daardoor soms wat onoverzichtelijk en irritant kan aanvoelen. Dit had echter geen invloed op de werking van NETCONF of het eindresultaat.
 
 ### Task Verification
+De correcte werking van NETCONF werd bevestigd door:
+    - Het succesvol ophalen van de running configuration
+    - Het aanpassen van configuratie-elementen via edit-config
+    - Het correct afwijzen van een ongeldige configuratie (duplicate IP-adres)
+Deze resultaten bevestigen dat NETCONF correct functioneert en dat configuraties betrouwbaar en consistent worden toegepast op het IOS XE-apparaat.
 
 ---
 
@@ -75,23 +85,4 @@ De resultaten van de NETMIKO-automatisering bevestigen dat de taken succesvol zi
 
 ---
 
-## Part 7: Getting started with NETCONF/YANG – Part 1 
 
-### Task Preparation and Implementation
-
-### Task Troubleshooting
-
-### Task Verification
-
----
-
-## Part 8: Getting started with NETCONF/YANG – Part 2 
-
-### Task Preparation and Implementation
-
-### Task Troubleshooting
-
-### Task Verification
-
-
----

@@ -1,0 +1,22 @@
+ Search the internet for “prettify XML”. Find a suitable site and use its tool to transform your XML into a more readable format, such as the following: 
+<?xml version="1.0"?>
+<rpc-reply
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="103">
+  <data>
+    <interfaces
+      xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+      <interface>
+        <name>GigabitEthernet1</name>
+        <description>VBox</description>
+        <type
+          xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-iftype">ianaift:ethernetCsmacd
+        </type>
+        <enabled>true</enabled>
+        <ipv4
+          xmlns="urn:ietf:params:xml:ns:yang:ietf-ip"/>
+          <ipv6
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-ip"/>
+          </interface>
+        </interfaces>
+      </data>
+    </rpc-reply> 
