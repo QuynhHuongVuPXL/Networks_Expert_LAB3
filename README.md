@@ -24,12 +24,7 @@ De CSR1000v virtual machine werd succesvol geïnstalleerd in VirtualBox volgens 
 Tijdens de installatie en configuratie van de CSR1000v VM zijn geen problemen of foutmeldingen opgetreden. Alle stappen konden zonder onderbrekingen worden uitgevoerd en troubleshooting was niet noodzakelijk.
 
 ### Task Verification
-De installatie werd succesvol geverifieerd door meerdere testen:
-    - De CSR1000v kreeg automatisch een geldig IPv4-adres via DHCP.
-    - De DEVASC VM kon de CSR1000v succesvol pingen zonder packet loss.
-    - Een SSH-sessie vanuit de DEVASC VM naar de CSR1000v werd succesvol opgezet en werkte correct.
-    - De WebUI van de CSR1000v was bereikbaar via HTTPS, zowel vanuit de DEVASC VM als vanaf de lokale computer.
-Deze resultaten bevestigen dat de CSR1000v VM correct is geïnstalleerd en volledig operationeel is.
+Installatie was succesvol
 ---
 
 ## Part 3: Python Network automation with NETMIKO 
@@ -87,5 +82,6 @@ Er zijn geen functionele problemen opgetreden met het toestel of de RESTCONF-ser
 De werking werd succesvol geverifieerd doordat de GET-requests correcte JSON-responses teruggaven en de PUT-request resulteerde in een HTTP 201 Created status. Daarnaast werd via de CLI op het IOS XE-toestel bevestigd dat de nieuwe loopbackinterface correct was aangemaakt en actief was.
 
 ---
+
 
 
