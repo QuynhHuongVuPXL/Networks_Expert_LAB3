@@ -28,10 +28,13 @@ Na de installatie werd de DEVASC VM succesvol gestart. Het Ubuntu-besturingssyst
 ## Part 3: Python Network automation with NETMIKO 
 
 ### Task Preparation and Implementation
+De vereiste omgeving was reeds correct opgezet binnen de DEVASC virtual machine. Python en de benodigde NETMIKO-bibliotheek waren beschikbaar en klaar voor gebruik. De NETMIKO-scripts konden zonder aanvullende configuratie worden uitgevoerd en maakten succesvol verbinding met de netwerkapparaten. De automatiseringstaken werden volgens de instructies uitgevoerd en verliepen op een duidelijke en rechtlijnige manier.
 
 ### Task Troubleshooting
+De uitvoering van deze taak was erg straightforward. Er zijn geen fouten, connectieproblemen of configuratie-issues opgetreden tijdens het gebruik van NETMIKO. Troubleshooting was daardoor niet nodig.
 
 ### Task Verification
+De resultaten van de NETMIKO-automatisering bevestigen dat de taken succesvol zijn uitgevoerd. De scripts leverden de verwachte output op en de netwerkapparaten reageerden correct op de geautomatiseerde commando’s. Dit bevestigt dat Python Network Automation met NETMIKO correct functioneert binnen de labomgeving.
 
 ---
 
