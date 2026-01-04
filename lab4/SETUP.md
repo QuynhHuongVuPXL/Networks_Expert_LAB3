@@ -91,6 +91,6 @@ show netconf-yang features
 
 # 7. Bewijs
 
-![CLI fail](/images/deploy_if_fail.png)
+![CLI fail](/lab4/images/deploy_if_fail.png)
 
-![CLI fail](/images/deploy_if_success.png)
+![CLI fail](/lab4/images/deploy_if_success.png)
