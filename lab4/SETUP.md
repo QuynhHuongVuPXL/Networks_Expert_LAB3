@@ -122,6 +122,8 @@ show netconf-yang datastores
 
 # 7. Bewijs
 
+Wanneer er geen candidate is:
 ![CLI fail](/lab4/images/deploy_if_fail.png)
 
+Wanneer er wel een candidate is: 
 ![CLI success](/lab4/images/deploy_if_success.png)
