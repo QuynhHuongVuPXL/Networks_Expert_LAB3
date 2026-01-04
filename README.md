@@ -84,6 +84,31 @@ De werking werd succesvol geverifieerd doordat de GET-requests correcte JSON-res
 
 ---
 
+# Networks_Expert_LAB4
+
+---
+
+## End-to-End automatisering NETCONF (Python) 
+
+### Task Preparation and Implementation
+Voor deze praktijkopdracht werd een end-to-end automatisering opgezet waarbij een volledige Cisco IOS-XE configuratie via NETCONF en YANG automatisch wordt uitgerold met behulp van Python. De configuratie wordt centraal beheerd in een GitHub repository, die fungeert als single source of truth.
+
+Tijdens de voorbereiding werd eerst een YANG-gebaseerd XML-configuratiebestand opgesteld dat de vereiste elementen bevat, namelijk een hostname, minstens twee interfaces met IP-adressen en OSPF routing. Vervolgens werd een Python-script ontwikkeld met behulp van de ncclient library om deze configuratie automatisch op te halen uit GitHub en via NETCONF te deployen op het IOS-XE toestel.
+
+De implementatie maakt gebruik van de candidate datastore om de configuratie eerst volledig te stagen voordat deze actief wordt. Pas na een succesvolle validatie wordt de configuratie in één atomische operatie gecommit naar de running-config. Op deze manier wordt gegarandeerd dat de configuratie consistent en herhaalbaar wordt toegepast, zonder tussentijdse wijzigingen in de actieve configuratie.
 
 
+### Task Troubleshooting
+Tijdens de uitvoering van de opdracht werd vooral de candidate datastore een groot struikelblok. Het was bijzonder frustrerend dat het NETCONF-script aanvankelijk bleef aangeven dat de candidate datastore capability ontbrak, ondanks dat NETCONF correct geconfigureerd leek.
 
+Dit probleem bleek te worden veroorzaakt door het gebruik van een verkeerde of onvolledig geconfigureerde IOS-XE versie. De candidate datastore was standaard niet ingeschakeld en werd daardoor niet geadverteerd aan NETCONF clients. Bovendien werd deze capability pas zichtbaar nadat het NETCONF subsystem opnieuw werd gestart, wat niet meteen duidelijk was.
+
+Daarnaast zorgde een foutieve plaatsing van de OSPF configuratie in het XML-bestand voor RPC errors. OSPF werd eerst als een los top-level element gedefinieerd, terwijl IOS-XE verwacht dat OSPF onder de native router configuratie wordt geplaatst. Na het corrigeren van deze structuur werkte de configuratie correct.
+
+
+### Task Verification
+Na de succesvolle uitvoering van het NETCONF-script werd de configuratie gecontroleerd om te bevestigen dat alle onderdelen correct actief waren op het IOS-XE toestel. Hierbij werd nagegaan of de hostname correct was toegepast, of de interfaces met de juiste IP-adressen actief waren en of het OSPF-proces correct draaide.
+
+Daarnaast werd gecontroleerd of de NETCONF candidate datastore effectief werd gebruikt tijdens de deployment en of de configuratie atomair werd toegepast. Omdat de configuratie pas actief werd na een expliciete commit, kon worden bevestigd dat er geen tussentijdse of gedeeltelijke wijzigingen in de running-config zichtbaar waren.
+
+Deze verificatiestappen bevestigen dat de automatisering correct functioneert en dat de oplossing voldoet aan alle opgelegde vereisten van de opdracht.
