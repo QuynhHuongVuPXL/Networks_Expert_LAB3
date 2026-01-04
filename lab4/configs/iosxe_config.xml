@@ -1,0 +1,47 @@
+<config>
+  <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+
+    <!-- Hostname -->
+    <hostname>CSR1kv-NETCONF</hostname>
+
+    <!-- Interfaces -->
+    <interface>
+      <GigabitEthernet>
+        <name>2</name>
+        <ip>
+          <address>
+            <primary>
+              <address>10.0.0.1</address>
+              <mask>255.255.255.0</mask>
+            </primary>
+          </address>
+        </ip>
+      </GigabitEthernet>
+
+      <GigabitEthernet>
+        <name>3</name>
+        <ip>
+          <address>
+            <primary>
+              <address>10.0.1.1</address>
+              <mask>255.255.255.0</mask>
+            </primary>
+          </address>
+        </ip>
+      </GigabitEthernet>
+    </interface>
+
+    <!-- OSPF -->
+    <router>
+      <ospf>
+        <id>1</id>
+        <network>
+          <ip>10.0.0.0</ip>
+          <wildcard>0.0.255.255</wildcard>
+          <area>0</area>
+        </network>
+      </ospf>
+    </router>
+
+  </native>
+</config>
