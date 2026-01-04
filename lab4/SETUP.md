@@ -77,20 +77,51 @@ urn:ietf:params:netconf:capability:candidate:1.0
 Zonder deze capability zal een script dat de candidate datastore vereist correct stoppen met een foutmelding.
 ````
 
-# 6. Commando's 
-Datastores checken:
+# 6. Verificatie
+
+## 1. Hostname verifiëren
+
+```cli
+show running-config | section hostname
+````
+
+![show running-config](/lab4/images/show_running_config.png)
+
+## 2. Interfaces en IP-adressen verifiëren
+
+```cli
+show ip interface brief | include Loopback
+````
+
+![show ip interface brief](/lab4/images/show_ip_interface_brief)
+
+## 3. OSPF proces verifiëren
+
+```cli
+show ip ospf
+````
+
+![show ip ospf](/lab4/images/show_ip_ospf)
+
+## 4. NETCONF sessie verifiëren
+
+```cli
+show netconf-yang sessions
+````
+
+![show netconf-yang sessions](/lab4/images/show_netconf_yang_sessions)
+
+
+## 5. Candidate datastore bevestigen
 
 ```cli
 show netconf-yang datastores
 ````
 
-Features checken:
-```cli
-show netconf-yang features
-````
+![show netconf-yang datastores](/lab4/images/show_netconf_yang_datastores)
 
 # 7. Bewijs
 
 ![CLI fail](/lab4/images/deploy_if_fail.png)
 
-![CLI fail](/lab4/images/deploy_if_success.png)
+![CLI success](/lab4/images/deploy_if_success.png)
