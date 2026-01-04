@@ -93,7 +93,7 @@ show running-config | section hostname
 show ip interface brief | include Loopback
 ````
 
-![show ip interface brief](/lab4/images/show_ip_interface_brief)
+![show ip interface brief](/lab4/images/show_ip_interface_brief.png)
 
 ## 3. OSPF proces verifiëren
 
@@ -101,7 +101,7 @@ show ip interface brief | include Loopback
 show ip ospf
 ````
 
-![show ip ospf](/lab4/images/show_ip_ospf)
+![show ip ospf](/lab4/images/show_ip_ospf.png)
 
 ## 4. NETCONF sessie verifiëren
 
@@ -109,7 +109,7 @@ show ip ospf
 show netconf-yang sessions
 ````
 
-![show netconf-yang sessions](/lab4/images/show_netconf_yang_sessions)
+![show netconf-yang sessions](/lab4/images/show_netconf_yang_sessions.png)
 
 
 ## 5. Candidate datastore bevestigen
@@ -118,7 +118,7 @@ show netconf-yang sessions
 show netconf-yang datastores
 ````
 
-![show netconf-yang datastores](/lab4/images/show_netconf_yang_datastores)
+![show netconf-yang datastores](/lab4/images/show_netconf_yang_datastores.png)
 
 # 7. Bewijs
 
