@@ -18,11 +18,18 @@ Na de installatie werd de DEVASC VM succesvol gestart. Het Ubuntu-besturingssyst
 ## Part 2: Install the CSR1000v VM 
 
 ### Task Preparation and Implementation
+De CSR1000v virtual machine werd succesvol geïnstalleerd in VirtualBox volgens de opgegeven instructies. De juiste ISO werd gekoppeld aan de eerste CD-drive en de standaard VM-instellingen werden behouden. Na het opstarten laadde Cisco IOS-XE correct en de router was bereikbaar via het console-scherm. De initiële configuratie verliep erg straightforward en zonder extra aanpassingen.
 
 ### Task Troubleshooting
+Tijdens de installatie en configuratie van de CSR1000v VM zijn geen problemen of foutmeldingen opgetreden. Alle stappen konden zonder onderbrekingen worden uitgevoerd en troubleshooting was niet noodzakelijk.
 
 ### Task Verification
-
+De installatie werd succesvol geverifieerd door meerdere testen:
+    - De CSR1000v kreeg automatisch een geldig IPv4-adres via DHCP.
+    - De DEVASC VM kon de CSR1000v succesvol pingen zonder packet loss.
+    - Een SSH-sessie vanuit de DEVASC VM naar de CSR1000v werd succesvol opgezet en werkte correct.
+    - De WebUI van de CSR1000v was bereikbaar via HTTPS, zowel vanuit de DEVASC VM als vanaf de lokale computer.
+Deze resultaten bevestigen dat de CSR1000v VM correct is geïnstalleerd en volledig operationeel is.
 ---
 
 ## Part 3: Python Network automation with NETMIKO 
