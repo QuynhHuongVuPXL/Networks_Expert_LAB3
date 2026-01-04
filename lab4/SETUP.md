@@ -20,6 +20,7 @@ conf t
  netconf-yang feature candidate-datastore
 end
 write memory
+````
 
 Uitleg:
     - netconf-yang → activeert NETCONF/YANG subsystem
@@ -35,6 +36,7 @@ conf t
  no netconf-yang
  netconf-yang
 end
+````
 
 Zonder deze stap blijft de candidate capability vaak onzichtbaar voor NETCONF-clients.
 
@@ -43,6 +45,7 @@ Controleer welke datastores beschikbaar zijn:
 
 ```cli
 show netconf-yang datastores
+````
 
 Verwachte output (voorbeeld):
 
@@ -50,6 +53,7 @@ Verwachte output (voorbeeld):
 Datastores:
   running
   candidate
+````
 
 De aanwezigheid van candidate bevestigt dat de feature correct is geactiveerd.
 
@@ -57,11 +61,13 @@ De aanwezigheid van candidate bevestigt dat de feature correct is geactiveerd.
 
 ```cli
 show netconf-yang features
+````
 
 Je zou een entry moeten zien voor:
 
 ```cli
 candidate-datastore
+````
 
 ## 5. Verificatie vanuit NETCONF client (Python)
 Wanneer een NETCONF client (bv. ncclient) verbindt, moet deze capability zichtbaar zijn:
@@ -69,6 +75,7 @@ Wanneer een NETCONF client (bv. ncclient) verbindt, moet deze capability zichtba
 ```cli
 urn:ietf:params:netconf:capability:candidate:1.0
 Zonder deze capability zal een script dat de candidate datastore vereist correct stoppen met een foutmelding.
+````
 
 # 6. Commando's 
 Datastores checken: show netconf-yang datastores
