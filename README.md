@@ -78,10 +78,13 @@ Deze resultaten bevestigen dat NETCONF correct functioneert en dat configuraties
 ## Part 6: Use RESTCONF to Access an IOS XE Device 
 
 ### Task Preparation and Implementation
+Voor deze taak werd de RESTCONF-service op het IOS XE-toestel gecontroleerd en correct geconfigureerd. Vervolgens werd Postman gebruikt om RESTCONF-requests te versturen naar het toestel. Met behulp van GET-requests werd interface-informatie succesvol opgehaald in JSON-formaat. Daarna werd een PUT-request gebruikt om een nieuwe loopbackinterface aan te maken. De juiste headers, authenticatie en JSON-body werden ingesteld volgens het lab.
 
 ### Task Troubleshooting
+Er zijn geen functionele problemen opgetreden met het toestel of de RESTCONF-service. Wel was het enigszins frustrerend om in Postman exact de juiste combinatie van URL, headers en body te gebruiken voor de GET- en PUT-requests. Kleine fouten in het pad of de JSON-structuur leidden snel tot foutmeldingen. Na het zorgvuldig volgen van de stappen en het corrigeren van deze details werkten de requests echter zoals verwacht.
 
 ### Task Verification
+De werking werd succesvol geverifieerd doordat de GET-requests correcte JSON-responses teruggaven en de PUT-request resulteerde in een HTTP 201 Created status. Daarnaast werd via de CLI op het IOS XE-toestel bevestigd dat de nieuwe loopbackinterface correct was aangemaakt en actief was.
 
 ---
 
